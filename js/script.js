@@ -1,6 +1,7 @@
 const time = document.querySelector('.time');
 const date = document.querySelector('.date');
 const greetingText = document.querySelector('.greeting');
+const name = document.querySelector('.name');
 
 
 function showDate() {
