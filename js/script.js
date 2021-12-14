@@ -2,6 +2,7 @@ const time = document.querySelector('.time');
 const date = document.querySelector('.date');
 const greetingText = document.querySelector('.greeting');
 const name = document.querySelector('.name');
+const body = document.querySelector('body');
 
 
 function showDate() {
@@ -34,7 +35,11 @@ function getLocalStorage() {
     name.value = localStorage.getItem('name');
   }
 }
+function getRandomNum() {
+  return Math.floor(Math.random() * (20 - 1 + 1)) + 1;
+}
 window.addEventListener('beforeunload', setLocalStorage);
 window.addEventListener('load', getLocalStorage);
 showTime();
+body.style.backgroundImage = "url('https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/evening/18.jpg')";
 
