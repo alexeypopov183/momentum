@@ -90,10 +90,10 @@ async function getWeather() {
   const data = await response.json();
 
   weatherIcon.className = 'weather-icon owf';
-
+  
   weatherIcon.classList.add(`owf-${data.weather[0].id}`);
-  temperature.textContent = `${data.main.temp}`;
-  weatherDescription.textContent = `${data.weather[0].description}`;
+  temperature.textContent = `${Math.trunc(data.main.temp)}°C ${data.weather[0].description}`;
+  weatherDescription.textContent = `Влажность: ${data.main.humidity}%`;
 }
 showTime();
 getRandomNum();
