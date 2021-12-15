@@ -5,13 +5,21 @@ const name = document.querySelector('.name');
 const body = document.querySelector('body');
 const slideNext = document.querySelector('.slide-next');
 const slidePrev = document.querySelector('.slide-prev');
+const weatherIcon = document.querySelector('.weather-icon');
+const temperature = document.querySelector('.temperature');
+const weatherDescription = document.querySelector('.weather-description');
+const city = document.querySelector('.city');
 
 let randomNum;
+city.value = 'Bratsk';
 
 window.addEventListener('beforeunload', setLocalStorage);
 window.addEventListener('load', getLocalStorage);
 slideNext.addEventListener('click', getSlideNext);
 slidePrev.addEventListener('click', getSlidePrev);
+city.addEventListener('change', getWeather)
+
+
 
 function showDate() {
   const dateNow = new Date;
@@ -76,7 +84,18 @@ function setBg() {
     // }; 
   })
 }
+async function getWeather() {
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city.value}&lang=ru&appid=8e8767dde5783dd9044719c06f8a8f65&units=metric`;
+  const response = await fetch(url);
+  const data = await response.json();
 
+  weatherIcon.className = 'weather-icon owf';
+
+  weatherIcon.classList.add(`owf-${data.weather[0].id}`);
+  temperature.textContent = `${data.main.temp}`;
+  weatherDescription.textContent = `${data.weather[0].description}`;
+}
 showTime();
 getRandomNum();
 setBg();
+getWeather()
