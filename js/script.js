@@ -12,8 +12,10 @@ const city = document.querySelector('.city');
 const quote = document.querySelector('.quote');
 const author = document.querySelector('.author');
 const changeQuote = document.querySelector('.change-quote');
+const playButton = document.querySelector('.play');
 
 let randomNum;
+let isPlay;
 city.value = 'Bratsk';
 
 window.addEventListener('beforeunload', setLocalStorage);
@@ -22,6 +24,7 @@ slideNext.addEventListener('click', getSlideNext);
 slidePrev.addEventListener('click', getSlidePrev);
 city.addEventListener('change', getWeather);
 changeQuote.addEventListener('click', getQuotes);
+playButton.addEventListener('click', playAudio)
 
 
 
@@ -115,6 +118,20 @@ async function getQuotes() {
   
   quote.textContent = `${data[bigRandom].text}`;
   author.textContent = `${data[bigRandom].author}`;
+}
+
+const audio = new Audio();
+
+function playAudio() {
+  audio.src = 'assets/sounds/Aqua Caelestis.mp3'
+  audio.currentTime = 0;
+  if(!isPlay) {
+    audio.play();
+    isPlay = true;
+  } else {
+    audio.pause();
+    isPlay = false;
+  }
 }
 
 showTime();
