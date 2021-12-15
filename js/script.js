@@ -9,6 +9,9 @@ const weatherIcon = document.querySelector('.weather-icon');
 const temperature = document.querySelector('.temperature');
 const weatherDescription = document.querySelector('.weather-description');
 const city = document.querySelector('.city');
+const quote = document.querySelector('.quote');
+const author = document.querySelector('.author');
+const changeQuote = document.querySelector('.change-quote');
 
 let randomNum;
 city.value = 'Bratsk';
@@ -17,7 +20,8 @@ window.addEventListener('beforeunload', setLocalStorage);
 window.addEventListener('load', getLocalStorage);
 slideNext.addEventListener('click', getSlideNext);
 slidePrev.addEventListener('click', getSlidePrev);
-city.addEventListener('change', getWeather)
+city.addEventListener('change', getWeather);
+changeQuote.addEventListener('click', getQuotes);
 
 
 
@@ -95,7 +99,26 @@ async function getWeather() {
   temperature.textContent = `${Math.trunc(data.main.temp)}°C ${data.weather[0].description}`;
   weatherDescription.textContent = `Влажность: ${data.main.humidity}%`;
 }
+async function getQuotes() {  
+  const quotes = 'https://type.fit/api/quotes';
+  const response = await fetch(quotes);
+  const data = await response.json();
+
+  let bigRandom;
+
+  (function getBigRandom() {
+    bigRandom = Math.floor(Math.random() * (data.length - 0)) + 0;
+    if(data[bigRandom].author === null) {
+          getBigRandom();
+        }
+  })();
+  
+  quote.textContent = `${data[bigRandom].text}`;
+  author.textContent = `${data[bigRandom].author}`;
+}
+
 showTime();
 getRandomNum();
 setBg();
-getWeather()
+getWeather();
+getQuotes();
