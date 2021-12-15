@@ -63,7 +63,18 @@ function getSlidePrev() {
 function setBg() {
   const timeOfDay = showTimesOfDay();
   const bgNum = String(randomNum).padStart(2, '0');
-  body.style.backgroundImage = `url('https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/${timeOfDay}/${bgNum}.jpg')`;
+
+  const img = new Image();
+
+  img.src = `https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/${timeOfDay}/${bgNum}.jpg`;
+
+  img.addEventListener('load', function() {
+    body.style.backgroundImage = `url('https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/${timeOfDay}/${bgNum}.jpg')`
+
+    // img.onload = () => {      
+    //   body.style.backgroundImage = ...// Либо addEventListener 'load' либо этот вариант onload
+    // }; 
+  })
 }
 
 showTime();
