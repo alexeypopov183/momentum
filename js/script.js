@@ -13,7 +13,12 @@ const quote = document.querySelector('.quote');
 const author = document.querySelector('.author');
 const changeQuote = document.querySelector('.change-quote');
 const playButton = document.querySelector('.play');
+const playListContainer = document.querySelector('.play-list');
+const btnPlayNext = document.querySelector('.play-next');
+const btnPlayPrev = document.querySelector('.play-prev');
 
+import playList from './playList.js';
+let playNum = 0;
 let randomNum;
 let isPlay;
 city.value = 'Bratsk';
@@ -25,7 +30,8 @@ slidePrev.addEventListener('click', getSlidePrev);
 city.addEventListener('change', getWeather);
 changeQuote.addEventListener('click', getQuotes);
 playButton.addEventListener('click', playAudio);
-playButton.addEventListener('click', pauseAudio);
+btnPlayNext.addEventListener('click', playNext);
+btnPlayPrev.addEventListener('click', playPrev);
 
 
 function showDate() {
@@ -121,19 +127,42 @@ async function getQuotes() {
 }
 
 const audio = new Audio();
+playList.forEach(buildPlaylist);
+
+function buildPlaylist(elem, index) {
+  const li = document.createElement('li');
+  li.classList.add('play-item');
+  li.textContent = playList[index].title;
+  playListContainer.append(li);
+}
 function playAudio() {
-  audio.src = 'assets/sounds/Aqua Caelestis.mp3'
+  audio.src = playList[playNum].src;
   audio.currentTime = 0;
   if(!isPlay) {
+    playButton.classList.add('pause');
     audio.play();
     isPlay = true;
   } else {
+    playButton.classList.remove('pause');
     audio.pause();
     isPlay = false;
   }
 }
-function pauseAudio() {
-  (!isPlay) ? playButton.classList.remove('pause') : playButton.classList.add('pause');
+function playNext() {
+  isPlay = false;
+  playNum++;
+  if(playNum > playList.length - 1) {
+    playNum = 0;
+  }
+  playAudio();
+}
+function playPrev() {
+  isPlay = false;
+  playNum--;
+  if(playNum < 0) {
+    playNum = playList.length - 1;
+  }
+  playAudio();
 }
 
 
@@ -142,6 +171,3 @@ getRandomNum();
 setBg();
 getWeather();
 getQuotes();
-
-import playList from './playList.js';
-console.log(playList);
