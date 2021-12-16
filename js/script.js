@@ -24,8 +24,8 @@ slideNext.addEventListener('click', getSlideNext);
 slidePrev.addEventListener('click', getSlidePrev);
 city.addEventListener('change', getWeather);
 changeQuote.addEventListener('click', getQuotes);
-playButton.addEventListener('click', playAudio)
-
+playButton.addEventListener('click', playAudio);
+playButton.addEventListener('click', pauseAudio);
 
 
 function showDate() {
@@ -121,7 +121,6 @@ async function getQuotes() {
 }
 
 const audio = new Audio();
-
 function playAudio() {
   audio.src = 'assets/sounds/Aqua Caelestis.mp3'
   audio.currentTime = 0;
@@ -133,6 +132,10 @@ function playAudio() {
     isPlay = false;
   }
 }
+function pauseAudio() {
+  (!isPlay) ? playButton.classList.remove('pause') : playButton.classList.add('pause');
+}
+
 
 showTime();
 getRandomNum();
