@@ -16,6 +16,7 @@ const playButton = document.querySelector('.play');
 const playListContainer = document.querySelector('.play-list');
 const btnPlayNext = document.querySelector('.play-next');
 const btnPlayPrev = document.querySelector('.play-prev');
+// const playListObject = document.querySelectorAll('.')
 
 import playList from './playList.js';
 let playNum = 0;
@@ -127,13 +128,14 @@ async function getQuotes() {
 }
 
 const audio = new Audio();
-playList.forEach(buildPlaylist);
 
-function buildPlaylist(elem, index) {
+function buildPlaylist() {
+  for(let index = 0; index < playList.length; index++) {
   const li = document.createElement('li');
   li.classList.add('play-item');
   li.textContent = playList[index].title;
   playListContainer.append(li);
+  }
 }
 function playAudio() {
   audio.src = playList[playNum].src;
@@ -171,3 +173,4 @@ getRandomNum();
 setBg();
 getWeather();
 getQuotes();
+buildPlaylist();
