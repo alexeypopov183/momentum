@@ -142,3 +142,6 @@ getRandomNum();
 setBg();
 getWeather();
 getQuotes();
+
+import playList from './playList.js';
+console.log(playList);
