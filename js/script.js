@@ -128,6 +128,8 @@ async function getQuotes() {
 }
 
 const audio = new Audio();
+let arr = [];
+console.log(arr);
 
 function buildPlaylist() {
   for(let index = 0; index < playList.length; index++) {
@@ -135,12 +137,15 @@ function buildPlaylist() {
   li.classList.add('play-item');
   li.textContent = playList[index].title;
   playListContainer.append(li);
+  arr.push(li);
   }
 }
 function playAudio() {
   audio.src = playList[playNum].src;
   audio.currentTime = 0;
+
   if(!isPlay) {
+    arr[playNum].classList.add('item-active');
     playButton.classList.add('pause');
     audio.play();
     isPlay = true;
@@ -150,7 +155,11 @@ function playAudio() {
     isPlay = false;
   }
 }
+function removeActive() {
+  arr[playNum].classList.remove('item-active');
+}
 function playNext() {
+  removeActive();
   isPlay = false;
   playNum++;
   if(playNum > playList.length - 1) {
@@ -159,6 +168,7 @@ function playNext() {
   playAudio();
 }
 function playPrev() {
+  removeActive();
   isPlay = false;
   playNum--;
   if(playNum < 0) {
